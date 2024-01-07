@@ -1,6 +1,6 @@
 The data for the study was obtained from Kaggle (Link: https://www.kaggle.com/datasets/captainozlem/framingham-chd-preprocessed-data)
 
-The study aims at finding the performance of 3 machine learning calssifiers and a deep learning model in predicting cardovascualr disease.
+The study aims at finding the performance of 3 machine learning classifiers and a deep learning model in predicting cardovascualr disease.
 The three machine learning classifiers are:
   1. RandomForestClassifier
   2. KNeighboursClassifier
