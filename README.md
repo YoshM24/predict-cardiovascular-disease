@@ -1,10 +1,12 @@
 The data for the study was obtained from Kaggle (Link: https://www.kaggle.com/datasets/captainozlem/framingham-chd-preprocessed-data)
 
 The study aims at finding the performance of 3 machine learning classifiers and a deep learning model in predicting cardiovascualr disease.
+
 The three machine learning classifiers are:
   1. RandomForestClassifier
   2. KNeighboursClassifier
   3. GradientBoostingClassifier
+
 For the the deep learning model, a 3 layered perceptron is used for this example.
 
 The code initially produces visualizations to identify distribution of the target column as well as several other parameters.
