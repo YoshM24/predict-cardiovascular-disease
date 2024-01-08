@@ -1,6 +1,6 @@
 The data for the study was obtained from Kaggle (Link: https://www.kaggle.com/datasets/captainozlem/framingham-chd-preprocessed-data)
 
-The project was developed in Jupyter Notebook. The code was optimized for a Python console project and uploaded to this repository.
+The project was initially developed in Jupyter Notebook to observe visualization. The code was later optimized for a Python console project and uploaded to this repository.
 
 The project consists of 3 files:
   1. classify_chd_main.py - the main file
