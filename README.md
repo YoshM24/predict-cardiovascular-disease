@@ -14,16 +14,16 @@ The three machine learning classifiers are:
   2. KNeighboursClassifier
   3. GradientBoostingClassifier
 
-For the the deep learning model, a 3 layered perceptron is used for this example.
+For the the deep learning model, a 3 layered perceptron is used in this example.
 
 The code initially produces visualizations to identify distribution of the target column as well as several other parameters.
 
-Highly correlated parameters are removed from the dataset with reference to the correlation matrix and LassoCV. 
+Highly correlated parameters are removed from the dataset with reference to the correlation matrix and Least Absolute Shrinkage and Selection Operator (LASSO) coefficients. LASSO helps identify the parameters that show no association with the column of interest (target column). These parameters produce a ZERO for LASSO coefficients.
 
-Outliers in the dataset are identicied using boxplots and are removed.
+In this example, outliers in the dataset are identified using boxplots and are removed providing an upper and lower limit based on the Inter-Quartile Range (IQR).
 
-The code also has a section for balancing the dataset using SMOTE (Oversampling).
+As initial visualizations displayed that the dataset was highly imbalanced for the target values, the code also has a section for balancing the dataset using SMOTE (Oversampling).
 
-The data is split for training and testing prior to passing into the classifiers.
+The data is split for training and testing prior to passing into the classifiers. In this example, 80% of the data was used for training as more values for training would capture more variations by the model.
 
-It further looks at hyperparameter tuning and changes in prediction of the classifiers after tuning.
+Hyperparameter tuning and changes in prediction of the classifiers after tuning too are covered in this example for all ML and DL models.
