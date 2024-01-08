@@ -1,6 +1,6 @@
 The data for the study was obtained from Kaggle (Link: https://www.kaggle.com/datasets/captainozlem/framingham-chd-preprocessed-data)
 
-The project was initially developed in Jupyter Notebook to observe visualization. The code was later optimized for a Python console project and uploaded to this repository.
+The project was initially developed in Jupyter Notebook to observe visualizations. The code was later optimized for a Python console project and uploaded to this repository.
 
 The project consists of 3 files:
   1. classify_chd_main.py - the main file
@@ -18,7 +18,7 @@ For the the DL model, a 3 layered perceptron is used in this example.
 
 The code initially produces visualizations to identify distribution of the target column as well as several other parameters.
 
-Highly correlated parameters are removed from the dataset with reference to the correlation matrix and Least Absolute Shrinkage and Selection Operator (LASSO) coefficients. LASSO helps identify the parameters that show no association with the column of interest (target column). These parameters produce a ZERO for LASSO coefficients.
+Highly correlated parameters are removed from the dataset with reference to the correlation matrix and Least Absolute Shrinkage and Selection Operator (LASSO) coefficients. Correlation matrix helps us understand the close relationship between features, whereas LASSO enables the identification of parameters that show no association with the column of interest (target column). These parameters produce a ZERO for LASSO coefficients.
 
 In this example, outliers in the dataset are identified using boxplots and are removed providing an upper and lower limit based on the Inter-Quartile Range (IQR).
 
