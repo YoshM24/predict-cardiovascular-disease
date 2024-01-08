@@ -33,6 +33,7 @@ from config_val import FILE_LOC, CAT_COLS, CONT_COLS, TARGET_COL, CV_VAL, CV_N_S
 # Import file containing functions
 from function_util import draw_pie_chart, draw_plotly_histogram, draw_plotly_single_feature_boxplot, draw_plotly_multi_feature_boxplot, draw_seaborn_histogram, draw_seaborn_barplot, draw_seaborn_heatmap, data_scaling, run_LassoCV, outlier_handle_iqr, run_classifier, draw_ROC_Curve, model_comparison_by_cross_val, run_hyperparameter_tuning, gen_summary_table, run_hyperparameter_tuning_dl, run_dl_model
 
+# Configure seaborn diagram size as per values given in configuration file
 sns.set(rc={'figure.figsize':(SNS_FIG_HEIGHT, SNS_FIG_WIDTH)})
 
 
@@ -81,13 +82,14 @@ for col in chd_df_copy:
 
 
 # Generate statistical summary of dataset
+print("Statistical Summary of Dataset")
 display(chd_df_copy.describe())
+print()
 
 
 # Check for row duplicates
 unique_rows_in_df = chd_df_copy.drop_duplicates()
-print(f"Total number of duplicate rows = {len(chd_df_copy) - len(unique_rows_in_df)}")
-
+print(f"Total number of duplicate rows = {len(chd_df_copy) - len(unique_rows_in_df)}", end="\n\n")
 # Since there are no duplicate rows, we will NOT be performing duplicate row operations
 
 
@@ -107,7 +109,7 @@ target_count = chd_df_copy['TenYearCHD'].value_counts()
 draw_pie_chart(target_count, target_count.index.map(TenYearCHD_def), '%1.1f%%')
 
 ## Above visualizations suggest that there is a large unbalance between the two target values.
-## Hence, Oversampling or UNDERSAMPLING to be considered when training the dataset.
+## Hence, Oversampling or undersampling to be considered when training the dataset.
 
 
 '''
@@ -160,6 +162,9 @@ draw_plotly_histogram(data=chd_df_copy, x="education", x_title='Education', y_ti
                       template="simple_white", barmode='group', xaxis_dict=education_def,
                       legend_title="TenYearCHD", legend_label_dict=TenYearCHD_def, change_legend_text=True, auto_text=True)
 
+'''
+ ./Value distribution by age and sex
+'''
 
 '''
 EDA of Continuous Variables
@@ -210,6 +215,11 @@ axes[2,2].set_axis_off()
 axes[2,1].set_axis_off()
 
 fig14.tight_layout()
+fig14.show()
+
+'''
+ ./ EDA of Continuous Variables
+'''
 
 
 '''
@@ -228,6 +238,9 @@ ax = draw_seaborn_heatmap(chd_df_copy)
 
 ## From the above correlation matrix, it is understood that non of the parameters show a strong correlation (>=0.9) against one another.
 
+'''
+ ./ EDA for discrete variables (EXCEPT age and education)
+'''
 
 
 '''
@@ -248,6 +261,14 @@ chd_df_backup = chd_df_copy.copy()
 chd_df_copy = chd_df_copy.drop(eliminated_features, axis=1)
 print(chd_df_copy, end="\n\n")
 
+'''
+ ./ Feature Selection (Pre-Standardization) using Lasso Coefficient
+'''
+
+
+'''
+Separating categorical, continuous and target columns for analysis
+'''
 
 # Separate the categorical, continuous and target columns
 print(f"Original categorical columns: {cat_cols}")
@@ -260,10 +281,13 @@ print(f"Updated continuous columns: {cont_cols}", end="\n\n")
 
 print(f"Target column: {target_col}", end="\n\n")
 
+'''
+ ./ Separating categorical, continuous and target columns for analysis
+'''
 
 
 '''
-Split Data for Training and Testing
+Split data for training and testing
 '''
 
 # Perform Trains Test Split
@@ -273,13 +297,17 @@ y = chd_df_copy[TARGET_COL]
 X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=TRAIN_TEST_SPLIT_SIZE,stratify=y,
                                                     random_state=RANDOM_STATE_VAL)
 
+'''
+ ./ Split data for training and testing
+'''
+
 
 '''
-Handling Outliers
+Handling outliers
 '''
 
 # Detect outliers in all continuous features
-draw_plotly_multi_feature_boxplot(X_train, cont_cols)
+draw_plotly_multi_feature_boxplot(X_train, cont_cols, title="Boxplot for all Continuous Features")
 
 
 ## Removing outliers
@@ -294,12 +322,16 @@ for col in sorted(cont_cols):
 
 
 # Create boxplots for updated dataset to check for outliers in all continuous features
-draw_plotly_multi_feature_boxplot(chd_df_new, cont_cols)
+draw_plotly_multi_feature_boxplot(chd_df_new, cont_cols, title="Boxplot for all Continuous Features (Post Outlier Removal)")
 
 
 # Update the training values
 X_train = chd_df_new.drop('TenYearCHD', axis=1)
 y_train = pd.DataFrame(chd_df_new['TenYearCHD'], columns = ['TenYearCHD'])
+
+'''
+ ./ Handling outliers
+'''
 
 
 '''
@@ -315,10 +347,13 @@ X_test = pd.DataFrame(testX, columns = chd_df_new.drop('TenYearCHD', axis=1).col
 print(X_train, end="\n\n")
 print(X_test, end="\n\n")
 
+'''
+ ./ Standardize the dataset
+'''
 
 
 '''
-Perform Classification After Balancing the Dataset
+Balancing the dataset
 '''
 
 # Balancing dataset using SMOTE
@@ -337,9 +372,15 @@ print("Before OverSampling, counts of label '0': {}".format(sum(y_train.values.r
 print("After OverSampling, counts of label '1': {}".format(sum(y_train_res == 1)))
 print("After OverSampling, counts of label '0': {}".format(sum(y_train_res == 0)))
 
+'''
+ ./ Balancing the dataset
+'''
 
+'''
+Run classifiers under default hyperparameters
+'''
 
-## Perform calssification for all classifiers under dfeault hyperparamters and generate their results along with ROC curve
+## Perform classification for all classifiers under dfeault hyperparamters and generate their results along with ROC curve
 classifier_list_dict = CLASSIFIER_LIST_DICT
 
 classifier_results={}
@@ -356,12 +397,15 @@ gen_summary_table(classifier_results)
 
 
 ## Comparison of ML Models under default hyperparameters
-comp_models = model_comparison_by_cross_val(cls_dict=classifier_list_dict, X=X_train_res, Y=y_train_res, scoring='accuracy')
+comp_models = model_comparison_by_cross_val(cls_dict=classifier_list_dict, X=X_train_res, Y=y_train_res, scoring='accuracy', title='ML Model Comparison using Results for Accuracy under Stratified Cross Validation')
 
+'''
+ ./ Run classifiers under default hyperparameters
+'''
 
 
 '''
-Perform Hyperparameter Tuning 
+Perform hyperparameter tuning (Optimization) for each classifier
 '''
 
 ## Hyperparameter tuning for Random Forest Classifier
@@ -375,7 +419,6 @@ print(f"Best hyperparameters for random forest = {rf_gsearch_result.best_params_
 rf_post_tuning = RandomForestClassifier(**rf_gsearch_result.best_params_, random_state=RANDOM_STATE_VAL)
 
 
-
 ## Hyperparameter tuning for KNeighbours Classifier
 
 # Obtain the best parameters and re-run classifier
@@ -385,7 +428,6 @@ kn_gsearch_result = run_hyperparameter_tuning(searchCV='gridSearch', classifier=
 print(f"Best hyperparameters for kneighbours = {kn_gsearch_result.best_params_}", end="\n\n")
 
 kn_post_tuning = KNeighborsClassifier(**kn_gsearch_result.best_params_)
-
 
 
 ## Hyperparameter tuning for Gradient Boosting Trees Classifier
@@ -398,6 +440,10 @@ gbt_gsearch_result = run_hyperparameter_tuning(searchCV='gridSearch',
 print(f"Best hyperparameters for gradient boosting trees = {gbt_gsearch_result.best_params_}", end="\n\n")
 
 gbt_post_tuning = GradientBoostingClassifier(**gbt_gsearch_result.best_params_, random_state=RANDOM_STATE_VAL)
+
+'''
+ ./ Perform hyperparameter tuning (Optimization) for each classifier 
+'''
 
 
 '''
@@ -418,12 +464,24 @@ for key,val in tuned_classifier_list_dict.items():
     draw_ROC_Curve(val, count, X_test, y_test, len(tuned_classifier_list_dict))
     count = count+1
 
-gen_summary_table(tuned_classifier_results)
-
+'''
+ ./ Run classifiers with their best parameters and view their performance
+'''
 
 
 '''
-Deep Learning
+Summarize the performance of optimized classifiers
+'''
+
+gen_summary_table(tuned_classifier_results)
+
+'''
+ ./ Summarize the performance of optimized classifiers
+'''
+
+
+'''
+Develop and run deep learning model
 '''
 
 ## Run deep learning model
@@ -438,6 +496,14 @@ dl_output = run_dl_model(n_layers=3, first_layer_nodes=input_dimensions, hidden_
 # Plot ROC curve for deep learning model
 _ = RocCurveDisplay.from_predictions(y_test, dl_output['predicted_values'])
 
+'''
+ ./ Develop and run deep learning model
+'''
+
+
+'''
+Optimize the deep learning model and generate results
+'''
 
 ## Tune Deep learning function
 input_dimensions = X_train_res.shape[1]
@@ -458,3 +524,6 @@ dl_output_tuned = run_dl_model(**dl_best_params, X_train=X_train_res, Y_train=y_
 # Plot ROC curve for optimized deep learning model
 _ = RocCurveDisplay.from_predictions(y_test, dl_output_tuned['predicted_values'])
 
+'''
+ ./ Optimize the deep learning model and generate results
+'''

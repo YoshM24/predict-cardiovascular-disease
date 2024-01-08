@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Feb 27 22:27:31 2023
 
-@author: SINGER
-"""
 import numpy as np
 from sklearn.model_selection import StratifiedKFold
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
@@ -12,7 +8,6 @@ from sklearn.metrics import make_scorer, accuracy_score, recall_score, f1_score
 
 # Specify folder path
 FILE_LOC = "data/CHD_data.csv"              # Specify the path of the dataset
-
 
 # Define columns in datatet
 DATA_COL_DEFS = {
