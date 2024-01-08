@@ -7,14 +7,14 @@ The project consists of 3 files:
   2. config_val.py - contains all the configuration values
   3. function_util.py - contains the author defined functions that will be called from the main file (outside library functions)
 
-The study aims at finding the performance of 3 machine learning classifiers and a deep learning model in predicting cardiovascualr disease.
+The study aims at finding the performance of 3 machine learning (ML) classifiers and a deep learning (DL) model in predicting cardiovascualr disease.
 
-The three machine learning classifiers are:
+The three ML classifiers are:
   1. RandomForestClassifier
   2. KNeighboursClassifier
   3. GradientBoostingClassifier
 
-For the the deep learning model, a 3 layered perceptron is used in this example.
+For the the DL model, a 3 layered perceptron is used in this example.
 
 The code initially produces visualizations to identify distribution of the target column as well as several other parameters.
 
