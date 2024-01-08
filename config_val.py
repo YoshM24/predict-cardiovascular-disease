@@ -7,9 +7,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import make_scorer, accuracy_score, recall_score, f1_score
 
 # Specify folder path
-FILE_LOC = "data/CHD_data.csv"              # Specify the path of the dataset
+FILE_LOC = "data/CHD_data.csv"
 
-# Define columns in datatet
+# Define columns in dataset
 DATA_COL_DEFS = {
     'male': "Sex of the person; (Binary); 0: Female, 1: Male",
     'age': "Age of the patient; (Continuous)",
@@ -48,12 +48,12 @@ DIABETES_DEF = {0:'No', 1:'Yes'}
 
 
 # General constants
-CV_VAL = 10
-CV_N_SPLITS = 10
-RANDOM_STATE_VAL = 42
-SMOTE_RANDOM_STATE_VAL = 2
-N_ITER_VAL = 1000
-TRAIN_TEST_SPLIT_SIZE = 0.2
+CV_VAL = 10                     # Cross-validation value. +Eg: 10 for 10-fold cross-validation
+CV_N_SPLITS = 10                # Cross-validation splits
+RANDOM_STATE_VAL = 42           # Random state value for consistent results
+SMOTE_RANDOM_STATE_VAL = 2      # SMOTE random state value for consistent results
+N_ITER_VAL = 1000               # Number of iterations for randomized search
+TRAIN_TEST_SPLIT_SIZE = 0.2     # The split percentage. +Eg: 0.2 is for 20% testing
 
 
 # Dimensions for seaborn plots
@@ -122,13 +122,13 @@ REFIT_VAL = "recall"
 N_JOBS_VAL = 3
 
 
-# Deep learning model hyperparameters
-DL_LOSS_FUNC_VALS = ['binary_crossentropy']
-DL_COMPILE_OPTIMIZER = 'adam'
-INPUT_ACIVATION = 'relu'
-HIDDEN_ACIVATION = 'relu'
-OUTPUT_ACIVATION = 'sigmoid'
-DROP1_VAL = [0.1, 0.2]
-DROP2_VAL = [0.3, 0.4, 0.5]
+# Deep learning model hyperparameters including activation functions and dropout values for different layers
+DL_LOSS_FUNC_VALS = ['binary_crossentropy']     # DL model loss function
+DL_COMPILE_OPTIMIZER = 'adam'   # DL model optimization function
+INPUT_ACIVATION = 'relu'        # Input layer activation function
+HIDDEN_ACIVATION = 'relu'       # Hidden layer activation function
+OUTPUT_ACIVATION = 'sigmoid'    # Output layer activation function
+DROP1_VAL = [0.1, 0.2]          # First dropout value range
+DROP2_VAL = [0.3, 0.4, 0.5]     # Second dropout value range
 EPOCHS_RANGE = [50, 100]
 BATCH_SIZE_RANGE = [32, 64]
