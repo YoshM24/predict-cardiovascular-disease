@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Feb 27 21:29:32 2023
 
-@author: SINGER
-"""
 import matplotlib
 import pandas as pd
 import seaborn as sns
@@ -32,6 +28,7 @@ from config_val import CV_VAL, CV_N_SPLITS, RANDOM_STATE_VAL, SMOTE_RANDOM_STATE
 # Draw a piechart using matplotlib
 def draw_pie_chart(data, labels, prct):
     plt.pie(data, labels=labels, startangle=90, autopct=prct)
+    plt.title('Distribution of Target Values')
     plt.tight_layout()
     plt.show()
 
@@ -98,12 +95,13 @@ def draw_plotly_single_feature_boxplot(data, x, y, y_title=None, x_title=None, t
 
 
 # Draw a boxplot using plotly for multiple features as x
-def draw_plotly_multi_feature_boxplot(df, cols):
+def draw_plotly_multi_feature_boxplot(df, cols, title):
     fig = go.Figure()
 
     for col in cols:
         fig.add_trace(go.Box(y=df[col].values, name=df[col].name))
 
+    fig.update_layout(title=title)
     fig.show()
     
 
@@ -320,7 +318,7 @@ def draw_ROC_Curve(classifier, count, test_X, test_Y, classifier_dict_len):
 
 
 # Compare ML Models
-def model_comparison_by_cross_val(cls_dict, X, Y, scoring):
+def model_comparison_by_cross_val(cls_dict, X, Y, scoring, title):
     model_results = []
     model_names = []
     
@@ -336,7 +334,7 @@ def model_comparison_by_cross_val(cls_dict, X, Y, scoring):
 
     # Boxplot to compare algorithms
     fig = plt.figure()
-    fig.suptitle('ML Model Comparison')
+    fig.suptitle(title)
     ax = fig.add_subplot(111)
     plt.boxplot(model_results)
     ax.set_xticklabels(model_names)
