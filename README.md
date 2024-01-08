@@ -1,5 +1,12 @@
 The data for the study was obtained from Kaggle (Link: https://www.kaggle.com/datasets/captainozlem/framingham-chd-preprocessed-data)
 
+The project was developed in Jupyter Notebook. The code was optimized for a Python console project and uploaded to this repository.
+
+The project consists of 3 files:
+  1. classify_chd_main.py - the main file
+  2. config_val.py - contains all the configuration values
+  3. function_util.py - contains the author defined functions that will be called from the main file (outside library functions)
+
 The study aims at finding the performance of 3 machine learning classifiers and a deep learning model in predicting cardiovascualr disease.
 
 The three machine learning classifiers are:
